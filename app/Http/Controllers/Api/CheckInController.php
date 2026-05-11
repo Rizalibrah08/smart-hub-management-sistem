@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\CheckInApproved;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponse;
 use App\Models\BorrowingSchedule;
@@ -131,6 +132,8 @@ class CheckInController extends Controller
                 }
             }
         });
+
+        CheckInApproved::dispatch($checkIn->fresh());
 
         return $this->success($checkIn->fresh(), 'Check-in berhasil disetujui.');
     }

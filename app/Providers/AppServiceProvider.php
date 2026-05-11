@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\CheckInApproved;
+use App\Listeners\SendCheckInNotification;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         // Override system environment variables with .env values
@@ -28,11 +28,8 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        //
+        Event::listen(CheckInApproved::class, SendCheckInNotification::class);
     }
 }
